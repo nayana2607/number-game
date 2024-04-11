@@ -12,7 +12,7 @@ export default function App() {
   const [userNumber, setUserNumber] = useState();
   const [gameisOver, setgameisOver] = useState(true);
   const [guessRounds, setGuessRounds] = useState(0);
-  console.log("at begning", gameisOver);
+
   const [isFontsLoaded] = useFonts({
     "open-sans": require("./assets/fonts/OpenSans-Regular.ttf"),
     "open-sans-bold": require("./assets/fonts/OpenSans-Bold.ttf"),

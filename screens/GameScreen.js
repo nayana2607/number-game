@@ -61,7 +61,7 @@ function GameScreen(props) {
 
   const guessRoundsListLength = guessRounds.length;
   return (
-    <View>
+    <View style={styles.screen}>
       <Title>Opponent's Guess</Title>
       <NumberContainer>{guess}</NumberContainer>
       <Card>
@@ -105,7 +105,7 @@ export default GameScreen;
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    padding: 24,
+    padding: 8,
   },
   buttonsContainer: {
     flexDirection: "row",
@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   logContainer: {
-    // flex: 1,
-    // padding: 16,
+    flex: 1,
+    padding: 16,
   },
 });
