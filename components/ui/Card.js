@@ -1,5 +1,6 @@
 import { StyleSheet, View } from "react-native";
 import Colors from "../../constants/colors";
+import { width } from "../../constants/dimensions";
 
 function Card({ children }) {
   return <View style={styles.card}>{children}</View>;
@@ -8,7 +9,7 @@ function Card({ children }) {
 const styles = StyleSheet.create({
   card: {
     padding: 16,
-    marginTop: 36,
+    marginTop: width < 380 ? 18 : 36,
     marginHorizontal: 24,
     backgroundColor: Colors.primary800,
     borderRadius: 8,

@@ -1,4 +1,10 @@
-import { Alert, FlatList, StyleSheet, Text, View } from "react-native";
+import {
+  Alert,
+  FlatList,
+  StyleSheet,
+  useWindowDimensions,
+  View,
+} from "react-native";
 import Title from "../components/ui/Title";
 import NumberContainer from "../components/game/NumberContainer";
 import { useEffect, useState } from "react";
@@ -9,9 +15,6 @@ import { AntDesign } from "@expo/vector-icons";
 import GuessLogItem from "../components/game/GuessLogItem";
 
 function generateRandomBetween(min, max, exclude) {
-  console.log("min and max", minBoundary, maxBoundary);
-  console.log("the min", min);
-  console.log("the max", max);
   const randomNumber = Math.floor(Math.random() * (max - min)) + min;
   if (randomNumber === exclude) {
     return generateRandomBetween(min, max, exclude);
@@ -22,6 +25,7 @@ let minBoundary = 1;
 let maxBoundary = 100;
 
 function GameScreen(props) {
+  const { height, width } = useWindowDimensions();
   const initialGuess = generateRandomBetween(1, 100, props.userNumber);
   const [guess, setGuess] = useState(initialGuess);
   const [guessRounds, setGuessRounds] = useState([initialGuess]);
@@ -60,9 +64,8 @@ function GameScreen(props) {
   }
 
   const guessRoundsListLength = guessRounds.length;
-  return (
-    <View style={styles.screen}>
-      <Title>Opponent's Guess</Title>
+  let content = (
+    <>
       <NumberContainer>{guess}</NumberContainer>
       <Card>
         <InstructionText style={styles.instructionText}>
@@ -81,6 +84,32 @@ function GameScreen(props) {
           </View>
         </View>
       </Card>
+    </>
+  );
+
+  if (width > 500) {
+    content = (
+      <>
+        <View style={styles.buttonsContainerLandscape}>
+          <View style={styles.buttonContainer}>
+            <PrimaryButton onPress={nextGuessHandler.bind(this, "greater")}>
+              <AntDesign name="pluscircleo" size={24} color="white" />
+            </PrimaryButton>
+          </View>
+          <NumberContainer>{guess}</NumberContainer>
+          <View style={styles.buttonContainer}>
+            <PrimaryButton onPress={nextGuessHandler.bind(this, "lower")}>
+              <AntDesign name="minuscircleo" size={24} color="white" />
+            </PrimaryButton>
+          </View>
+        </View>
+      </>
+    );
+  }
+  return (
+    <View style={styles.screen}>
+      <Title>Opponent's Guess</Title>
+      {content}
       <View style={styles.logContainer}>
         {/* {guessRounds.map((guess) => (
           <Text key={guess}>Computer says {guess}</Text>
@@ -106,9 +135,15 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
     padding: 8,
+    alignItems: "center",
+    marginTop: 50,
   },
   buttonsContainer: {
     flexDirection: "row",
+  },
+  buttonsContainerLandscape: {
+    flexDirection: "row",
+    alignItems: "center",
   },
   buttonContainer: {
     flex: 1,
@@ -118,6 +153,5 @@ const styles = StyleSheet.create({
   },
   logContainer: {
     flex: 1,
-    padding: 16,
   },
 });
